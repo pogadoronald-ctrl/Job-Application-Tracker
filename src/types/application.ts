@@ -20,7 +20,7 @@ export interface ApplicationFormData {
     dateApplied: string
     jobLink: string
     salary?: number
-    notes: string
+    notes?: string
 }
 
 export interface Application extends ApplicationFormData{
