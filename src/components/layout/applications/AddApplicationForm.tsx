@@ -21,7 +21,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Company
+            Company <span className="text-red-600">*</span>
             </label>
 
             <input
@@ -40,7 +40,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Position
+            Position <span className="text-red-600">*</span>
             </label>
 
             <input
@@ -59,7 +59,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Location
+            Location <span className="text-red-600">*</span> 
             </label>
 
             <input
@@ -78,7 +78,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Status
+            Status <span className="text-red-600">*</span>
             </label>
 
             <select
@@ -102,7 +102,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Employment Type
+            Employment Type <span className="text-red-600">*</span>
             </label>
 
             <select
@@ -125,7 +125,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Date Applied
+            Date Applied <span className="text-red-600">*</span>
             </label>
 
             <input
@@ -143,7 +143,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Job Link
+            Job Link 
             </label>
 
             <input
@@ -162,7 +162,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Salary
+            Salary <span className="text-red-600">*</span>
             </label>
 
             <input
@@ -181,7 +181,7 @@ export default function AddApplicationForm() {
 
         <div>
             <label className="mb-2 block text-sm font-medium">
-            Notes
+            Notes 
             </label>
 
             <textarea
