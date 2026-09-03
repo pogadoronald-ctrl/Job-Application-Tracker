@@ -38,7 +38,7 @@ export default function AddApplicationForm() {
             )}
         </div>
 
-\        <div>
+        <div>
             <label className="mb-2 block text-sm font-medium">
             Position
             </label>
