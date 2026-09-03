@@ -25,6 +25,6 @@ export const applicationSchema = z.object({
     }),
     dateApplied: z.string().min(1, "Date applied is required"),
     jobLink: z.string().url("Please enter a valid link").or(z.literal('')),
-    salary: z.number().optional(),
+    salary: z.number({error: "Please enter a valid salary"}).optional(),
     notes: z.string().default(''),
 })
