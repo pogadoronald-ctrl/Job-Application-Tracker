@@ -10,15 +10,21 @@ export const applicationSchema = z.object({
         'Offer',
         'Rejected',
         'Withdrawn',
-    ]),
+    ],
+    {
+        error: "Please select current status",
+    }),
     employmentType: z.enum([
         'Full-time',
         'Part-time',
         'Contract',
         'Internship',
-    ]),
+    ],
+    {
+        error: "Please select an employment type"
+    }),
     dateApplied: z.string().min(1, "Date applied is required"),
     jobLink: z.string().url("Please enter a valid link").or(z.literal('')),
     salary: z.number().optional(),
-    notes: z.string(),
+    notes: z.string().default(''),
 })
