@@ -1,6 +1,6 @@
 import type { Application } from "../../../types/application";
 
-import { LuPencil, LuTrash2 } from "react-icons/lu";
+import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
 
 type ApplicationCardProps = {
     application: Application;
@@ -29,27 +29,42 @@ export default function ApplicationCard({
                 </span>
             </div>
 
-            <div className="mt-4 border-t pt-4">
-                <p className="text-sm text-gray-500">
-                Date Applied
-                </p>
+            <div className="flex justify-between mt-4 border-t pt-4">
+                <div>
+                    <p className="text-sm text-gray-500">
+                    Date Applied
+                    </p>
 
-                <p className="mt-1 text-sm">
-                {application.dateApplied}
-                </p>
+                    <p className="mt-1 text-sm">
+                    {application.dateApplied}
+                    </p>
+                </div>
+                
+                <div className="flex gap-2 justify-center">
+                    <button
+                        type="button"
+                        title="View Details"
+                        aria-label="View Details"
+                        className="text-blue-600 hover:text-blue-800">
+                        <LuEye size={16} />
+                    </button>
+                    <button 
+                        type="button" 
+                        title="Edit"
+                        aria-label="Edit"
+                        onClick={() => onEdit(application)}
+                        className="text-green-600 hover:text-green-800">
+                        <LuPencil size={16} />
+                    </button>
+                    <button
+                        type="button"
+                        title="Delete"
+                        aria-label="Delete"
+                        className="text-red-600 hover:text-red-800">
+                        <LuTrash2 size={16} />
+                    </button>
+                </div>
             </div>
-            
-            <button 
-                type="button" 
-                onClick={() => onEdit(application)}
-                className="text-green-600 hover:text-green-800">
-                <LuPencil size={18} />
-            </button>
-            <button
-                type="button"
-                className="text-red-600 hover:text-red-800">
-                <LuTrash2 size={18} />
-            </button>
         </div>
     );
 }
