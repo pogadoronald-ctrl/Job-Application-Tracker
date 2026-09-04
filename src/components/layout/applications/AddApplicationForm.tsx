@@ -1,26 +1,50 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
 
 import { applicationSchema } from '../../../lib/validation'
-import type { ApplicationFormData } from '../../../types/application'
+import type { Application, ApplicationFormData } from '../../../types/application'
 import { useApplicationsContext } from '../../../context/ApplicationsContext'
 
-export default function AddApplicationForm() {
-    const navigate = useNavigate()
-    const { add } = useApplicationsContext()
+type AddApplicationFormProps = {
+    application?: Application
+    onSuccess?: () => void
+}
+
+export default function AddApplicationForm({
+    application,
+    onSuccess,
+    }: AddApplicationFormProps) {
+    const { add, update } = useApplicationsContext()
     
     const {
         register,
         handleSubmit,
         formState: { errors },
-        } = useForm<ApplicationFormData>({
-            resolver: zodResolver(applicationSchema),
+    } = useForm<ApplicationFormData>({
+        resolver: zodResolver(applicationSchema),
+        defaultValues: application
+            ? {
+                company: application.company,
+                position: application.position,
+                location: application.location,
+                status: application.status,
+                employmentType: application.employmentType,
+                dateApplied: application.dateApplied,
+                jobLink: application.jobLink,
+                salary: application.salary,
+                notes: application.notes,
+            }
+            : undefined,
     })
 
     const onSubmit = (data: ApplicationFormData) => {
-        add(data)
-        navigate('/applications')
+        if (application) {
+            update(application.id, data)
+        } else {
+            add(data)
+        }
+
+        onSuccess?.()
     }
 
     return (
@@ -209,7 +233,7 @@ export default function AddApplicationForm() {
             type="submit"
             className="rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
         >
-            Add Application
+            {application ? 'Save Changes' : 'Add Application'}
         </button>
 
         </form>

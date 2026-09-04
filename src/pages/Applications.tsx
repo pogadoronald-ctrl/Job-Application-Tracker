@@ -1,10 +1,17 @@
+import { useState } from "react";
+import type { Application } from "../types/application";
+
 import ApplicationTable from "../components/layout/applications/ApplicationTable";
 import ApplicationCard from "../components/layout/applications/ApplicationCard"; 
+import EditApplicationModal from "../components/layout/applications/EditApplicationModal";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
 export default function Applications() {
     const { applications } = useApplicationsContext();
+
+    const [editingApplication, setEditingApplication] =
+    useState<Application | null>(null);
 
     return (
         <div className="space-y-6">
@@ -16,7 +23,10 @@ export default function Applications() {
             </div>
 
             <div className="hidden md:block">
-                <ApplicationTable applications={applications} />
+                <ApplicationTable 
+                    applications={applications} 
+                    onEdit={setEditingApplication}
+                />
             </div>
 
             <div className="space-y-4 md:hidden">
@@ -24,9 +34,17 @@ export default function Applications() {
                 <ApplicationCard
                     key={application.id}
                     application={application}
+                    onEdit={setEditingApplication}
                 />
                 ))}
             </div>
+            
+            {editingApplication && (
+                <EditApplicationModal
+                    application={editingApplication}
+                    onClose={() => setEditingApplication(null)}
+                />
+            )}
         </div>
     );
 }
