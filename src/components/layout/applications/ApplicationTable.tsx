@@ -7,11 +7,13 @@ import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
 type ApplicationTableProps = {
     applications: Application[];
     onEdit: (application: Application) => void;
+    onDelete: (application: Application) => void;
 };
 
 export default function ApplicationTable({
     applications,
     onEdit,
+    onDelete,
     }: ApplicationTableProps) {
     return (
         <div className="overflow-x-auto rounded-lg border bg-white">
@@ -79,6 +81,7 @@ export default function ApplicationTable({
                                 type="button"
                                 title="Delete"
                                 aria-label="Delete"
+                                onClick={() => onDelete(application)}
                                 className="text-red-600 hover:text-red-800">
                                 <LuTrash2 size={18} />
                             </button>

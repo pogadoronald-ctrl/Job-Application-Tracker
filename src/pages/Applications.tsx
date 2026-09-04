@@ -4,13 +4,17 @@ import type { Application } from "../types/application";
 import ApplicationTable from "../components/layout/applications/ApplicationTable";
 import ApplicationCard from "../components/layout/applications/ApplicationCard"; 
 import EditApplicationModal from "../components/layout/applications/EditApplicationModal";
+import DeleteApplicationModal from "../components/layout/applications/DeleteApplicationModal";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
 export default function Applications() {
-    const { applications } = useApplicationsContext();
+    const { applications, remove } = useApplicationsContext();
 
     const [editingApplication, setEditingApplication] =
+    useState<Application | null>(null);
+
+    const [deletingApplication, setDeletingApplication] =
     useState<Application | null>(null);
 
     return (
@@ -26,6 +30,7 @@ export default function Applications() {
                 <ApplicationTable 
                     applications={applications} 
                     onEdit={setEditingApplication}
+                    onDelete={setDeletingApplication}
                 />
             </div>
 
@@ -35,6 +40,7 @@ export default function Applications() {
                     key={application.id}
                     application={application}
                     onEdit={setEditingApplication}
+                    onDelete={setDeletingApplication}
                 />
                 ))}
             </div>
@@ -43,6 +49,17 @@ export default function Applications() {
                 <EditApplicationModal
                     application={editingApplication}
                     onClose={() => setEditingApplication(null)}
+                />
+            )}
+
+            {deletingApplication && (
+                <DeleteApplicationModal
+                    application={deletingApplication}
+                    onClose={() => setDeletingApplication(null)}
+                    onConfirm={() => {
+                        remove(deletingApplication.id);
+                        setDeletingApplication(null);
+                    }}
                 />
             )}
         </div>

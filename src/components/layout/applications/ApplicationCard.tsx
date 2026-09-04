@@ -5,11 +5,13 @@ import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
 type ApplicationCardProps = {
     application: Application;
     onEdit: (application: Application) => void;
+    onDelete: (application: Application) => void;
 };
 
 export default function ApplicationCard({
     application,
     onEdit,
+    onDelete,
     }: ApplicationCardProps) {
     return (
         <div className="rounded-lg border bg-white p-5">
@@ -60,6 +62,7 @@ export default function ApplicationCard({
                         type="button"
                         title="Delete"
                         aria-label="Delete"
+                        onClick={() => onDelete(application)}
                         className="text-red-600 hover:text-red-800">
                         <LuTrash2 size={16} />
                     </button>
