@@ -1,8 +1,11 @@
-import { mockApplications } from "../data/mockApplications";
 import ApplicationTable from "../components/layout/applications/ApplicationTable";
 import ApplicationCard from "../components/layout/applications/ApplicationCard"; 
 
+import { useApplicationsContext } from "../context/ApplicationsContext";
+
 export default function Applications() {
+    const { applications } = useApplicationsContext();
+
     return (
         <div className="space-y-6">
             <div>
@@ -13,11 +16,11 @@ export default function Applications() {
             </div>
 
             <div className="hidden md:block">
-                <ApplicationTable applications={mockApplications} />
+                <ApplicationTable applications={applications} />
             </div>
 
             <div className="space-y-4 md:hidden">
-                {mockApplications.map((application) => (
+                {applications.map((application) => (
                 <ApplicationCard
                     key={application.id}
                     application={application}
