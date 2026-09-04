@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import { applicationSchema } from '../../../lib/validation'
 import type { ApplicationFormData } from '../../../types/application'
+import { useApplicationsContext } from '../../../context/ApplicationsContext'
 
 export default function AddApplicationForm() {
+    const { add } = useApplicationsContext()
+    
     const {
         register,
         handleSubmit,
@@ -13,7 +17,7 @@ export default function AddApplicationForm() {
     })
 
     const onSubmit = (data: ApplicationFormData) => {
-        console.log(data)
+        add(data)
     }
 
     return (
