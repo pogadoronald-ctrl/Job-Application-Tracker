@@ -1,0 +1,47 @@
+import { useState } from "react";
+import type { Application, ApplicationFormData } from "../types/application";
+
+export function useApplications() {
+    const [applications, setApplications] = useState<Application[]>([]);
+
+    const add = (data: ApplicationFormData) => {
+        const newApplication: Application = {
+        ...data,
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        };
+
+        setApplications((prev) => [...prev, newApplication]);
+    };
+
+    const update = (id: string, data: ApplicationFormData) => {
+        setApplications((prev) =>
+        prev.map((application) =>
+            application.id === id
+            ? {
+                ...application,
+                ...data,
+                }
+            : application
+        )
+        );
+    };
+
+    const remove = (id: string) => {
+        setApplications((prev) =>
+        prev.filter((application) => application.id !== id)
+        );
+    };
+
+    const getById = (id: string) => {
+        return applications.find((application) => application.id === id);
+    };
+
+    return {
+        applications,
+        add,
+        update,
+        remove,
+        getById,
+    };
+}
