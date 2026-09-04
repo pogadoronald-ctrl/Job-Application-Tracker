@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ApplicationsProvider } from "./context/ApplicationsContext";
 
 import AppLayout from "./layout/AppLayout";
 import Dashboard from "./pages/Dashboard";
@@ -8,13 +9,15 @@ import AddApplication from "./pages/AddApplication";
 export default function App(){
   return(
     <BrowserRouter>
-      <Routes >
-        <Route element={<AppLayout />} > 
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/applications" element={<Applications />} />
-          <Route path="/applications/add" element={<AddApplication />} />
-        </Route>
-      </Routes>
+      <ApplicationsProvider > 
+        <Routes >
+          <Route element={<AppLayout />} > 
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/applications" element={<Applications />} />
+            <Route path="/applications/add" element={<AddApplication />} />
+          </Route>
+        </Routes>
+      </ApplicationsProvider>
     </BrowserRouter>
   )
 }
