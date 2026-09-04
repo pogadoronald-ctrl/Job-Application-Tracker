@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router-dom'
 
 import { applicationSchema } from '../../../lib/validation'
 import type { ApplicationFormData } from '../../../types/application'
 import { useApplicationsContext } from '../../../context/ApplicationsContext'
 
 export default function AddApplicationForm() {
+    const navigate = useNavigate()
     const { add } = useApplicationsContext()
     
     const {
@@ -18,6 +20,7 @@ export default function AddApplicationForm() {
 
     const onSubmit = (data: ApplicationFormData) => {
         add(data)
+        navigate('/applications')
     }
 
     return (
