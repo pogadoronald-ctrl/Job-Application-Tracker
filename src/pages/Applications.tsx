@@ -11,7 +11,7 @@ import { useApplicationsContext } from "../context/ApplicationsContext";
 
 export default function Applications() {
     const { applications, remove } = useApplicationsContext();
-
+    
     const [editingApplication, setEditingApplication] =
     useState<Application | null>(null);
 
@@ -20,6 +20,21 @@ export default function Applications() {
 
     const [viewingApplication, setViewingApplication] =
     useState<Application | null>(null);
+    
+    const [searchTerm, setSearchTerm ] = useState("");
+    const filteredApplications = applications.filter((application) => {
+    const search = searchTerm.toLowerCase();
+
+        return (
+            application.company.toLowerCase().includes(search) ||
+            application.position.toLowerCase().includes(search) ||
+            application.location.toLowerCase().includes(search) ||
+            application.status.toLowerCase().includes(search) ||
+            application.employmentType.toLowerCase().includes(search) ||
+            application.dateApplied.toLowerCase().includes(search) 
+        );
+    });
+
 
     return (
         <div className="space-y-6">
@@ -30,9 +45,19 @@ export default function Applications() {
                 </p>
             </div>
 
+            <div className="relative max-w-sm">
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search applications..."
+                    className="w-full rounded-lg border px-4 py-2.5 pr-10 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+            </div>
+
             <div className="hidden md:block">
                 <ApplicationTable 
-                    applications={applications} 
+                    applications={filteredApplications} 
                     onEdit={setEditingApplication}
                     onDelete={setDeletingApplication}
                     onView={setViewingApplication}
@@ -40,7 +65,7 @@ export default function Applications() {
             </div>
 
             <div className="space-y-4 md:hidden">
-                {applications.map((application) => (
+                {filteredApplications.map((application) => (
                 <ApplicationCard
                     key={application.id}
                     application={application}
