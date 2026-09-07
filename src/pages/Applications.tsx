@@ -6,6 +6,7 @@ import ApplicationCard from "../components/layout/applications/ApplicationCard";
 import EditApplicationModal from "../components/layout/applications/EditApplicationModal";
 import DeleteApplicationModal from "../components/layout/applications/DeleteApplicationModal";
 import ViewApplicationModal from "../components/layout/applications/ViewApplicationModal";
+import EmptyApplicationState from "../components/layout/applications/EmptyApplicationState";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
@@ -24,6 +25,9 @@ export default function Applications() {
     const [searchTerm, setSearchTerm ] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
     const [sortBy, setSortBy] = useState("newest");
+    const hasFilters =
+    searchTerm.trim() !== "" ||
+    statusFilter !== "All";
 
     const filteredApplications = applications.filter((application) => {
         const search = searchTerm.toLowerCase();
@@ -111,26 +115,38 @@ export default function Applications() {
                 </select>
             </div>
 
-            <div className="hidden md:block">
-                <ApplicationTable 
-                    applications={filteredApplications} 
-                    onEdit={setEditingApplication}
-                    onDelete={setDeletingApplication}
-                    onView={setViewingApplication}
+            {filteredApplications.length === 0 ? (
+                <EmptyApplicationState
+                    filtered={hasFilters}
+                    onClearFilters={() => {
+                        setSearchTerm("");
+                        setStatusFilter("All");
+                    }}
                 />
-            </div>
+            ) : (
+                <>
+                    <div className="hidden md:block">
+                        <ApplicationTable
+                            applications={filteredApplications}
+                            onEdit={setEditingApplication}
+                            onDelete={setDeletingApplication}
+                            onView={setViewingApplication}
+                        />
+                    </div>
 
-            <div className="space-y-4 md:hidden">
-                {filteredApplications.map((application) => (
-                <ApplicationCard
-                    key={application.id}
-                    application={application}
-                    onEdit={setEditingApplication}
-                    onDelete={setDeletingApplication}
-                    onView={setViewingApplication}
-                />
-                ))}
-            </div>
+                    <div className="space-y-4 md:hidden">
+                        {filteredApplications.map((application) => (
+                            <ApplicationCard
+                                key={application.id}
+                                application={application}
+                                onEdit={setEditingApplication}
+                                onDelete={setDeletingApplication}
+                                onView={setViewingApplication}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
             
             {editingApplication && (
                 <EditApplicationModal
