@@ -8,12 +8,14 @@ type ApplicationTableProps = {
     applications: Application[];
     onEdit: (application: Application) => void;
     onDelete: (application: Application) => void;
+    onView: (application: Application) => void;
 };
 
 export default function ApplicationTable({
     applications,
     onEdit,
     onDelete,
+    onView,
     }: ApplicationTableProps) {
     return (
         <div className="overflow-x-auto rounded-lg border bg-white">
@@ -66,6 +68,7 @@ export default function ApplicationTable({
                                 type="button"
                                 title="View Details"
                                 aria-label="View Details"
+                                onClick={() => onView(application)}
                                 className="text-blue-600 hover:text-blue-800">
                                 <LuEye size={18} />
                             </button>

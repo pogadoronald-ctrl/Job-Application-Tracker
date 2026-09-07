@@ -5,6 +5,7 @@ import ApplicationTable from "../components/layout/applications/ApplicationTable
 import ApplicationCard from "../components/layout/applications/ApplicationCard"; 
 import EditApplicationModal from "../components/layout/applications/EditApplicationModal";
 import DeleteApplicationModal from "../components/layout/applications/DeleteApplicationModal";
+import ViewApplicationModal from "../components/layout/applications/ViewApplicationModal";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
@@ -15,6 +16,9 @@ export default function Applications() {
     useState<Application | null>(null);
 
     const [deletingApplication, setDeletingApplication] =
+    useState<Application | null>(null);
+
+    const [viewingApplication, setViewingApplication] =
     useState<Application | null>(null);
 
     return (
@@ -31,6 +35,7 @@ export default function Applications() {
                     applications={applications} 
                     onEdit={setEditingApplication}
                     onDelete={setDeletingApplication}
+                    onView={setViewingApplication}
                 />
             </div>
 
@@ -41,6 +46,7 @@ export default function Applications() {
                     application={application}
                     onEdit={setEditingApplication}
                     onDelete={setDeletingApplication}
+                    onView={setViewingApplication}
                 />
                 ))}
             </div>
@@ -60,6 +66,13 @@ export default function Applications() {
                         remove(deletingApplication.id);
                         setDeletingApplication(null);
                     }}
+                />
+            )}
+
+            {viewingApplication && (
+                <ViewApplicationModal
+                    application={viewingApplication}
+                    onClose={() => setViewingApplication(null)}
                 />
             )}
         </div>

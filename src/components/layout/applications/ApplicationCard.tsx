@@ -6,12 +6,14 @@ type ApplicationCardProps = {
     application: Application;
     onEdit: (application: Application) => void;
     onDelete: (application: Application) => void;
+    onView: (application: Application) => void;
 };
 
 export default function ApplicationCard({
     application,
     onEdit,
     onDelete,
+    onView,
     }: ApplicationCardProps) {
     return (
         <div className="rounded-lg border bg-white p-5">
@@ -47,6 +49,7 @@ export default function ApplicationCard({
                         type="button"
                         title="View Details"
                         aria-label="View Details"
+                        onClick={() => onView(application)}
                         className="text-blue-600 hover:text-blue-800">
                         <LuEye size={16} />
                     </button>
