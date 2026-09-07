@@ -4,26 +4,36 @@ import type { Application, ApplicationFormData } from "../types/application";
 const STORAGE_KEY = "joblyst_applications";
 
 export function useApplications() {
-    const [applications, setApplications] = useState<Application[]>(() => {
-        const storedApplications = localStorage.getItem(STORAGE_KEY);
-
-        if (!storedApplications) {
-            return [];
-        }
-
-        try {
-            return JSON.parse(storedApplications);
-        } catch {
-            return [];
-        }
-    });
+    const [applications, setApplications] = useState<Application[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(applications)
-        );
-    }, [applications]);
+        try {
+            const storedApplications = localStorage.getItem(STORAGE_KEY);
+
+            if (storedApplications) {
+                setApplications(JSON.parse(storedApplications));
+            }
+        } catch {
+            setError("Failed to load your applications.");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isLoading) return;
+
+        try {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(applications)
+            );
+        } catch {
+            setError("Failed to save your applications.");
+        }
+    }, [applications, isLoading]);
 
     const add = (data: ApplicationFormData) => {
         const newApplication: Application = {
@@ -62,6 +72,8 @@ export function useApplications() {
 
     return {
         applications,
+        isLoading,
+        error,
         add,
         update,
         remove,

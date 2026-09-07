@@ -7,11 +7,13 @@ import EditApplicationModal from "../components/layout/applications/EditApplicat
 import DeleteApplicationModal from "../components/layout/applications/DeleteApplicationModal";
 import ViewApplicationModal from "../components/layout/applications/ViewApplicationModal";
 import EmptyApplicationState from "../components/layout/applications/EmptyApplicationState";
+import ApplicationLoading from "../components/layout/applications/ApplicationLoading";
+import ApplicationError from "../components/layout/applications/ApplicationError";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
 export default function Applications() {
-    const { applications, remove } = useApplicationsContext();
+    const { applications, remove, isLoading, error } = useApplicationsContext();
     
     const [editingApplication, setEditingApplication] =
     useState<Application | null>(null);
@@ -115,7 +117,11 @@ export default function Applications() {
                 </select>
             </div>
 
-            {filteredApplications.length === 0 ? (
+            {isLoading ? (
+                <ApplicationLoading />
+            ) : error ? (
+                <ApplicationError message={error} />
+            ) : filteredApplications.length === 0 ? (
                 <EmptyApplicationState
                     filtered={hasFilters}
                     onClearFilters={() => {
