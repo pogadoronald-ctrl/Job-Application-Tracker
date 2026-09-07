@@ -22,17 +22,24 @@ export default function Applications() {
     useState<Application | null>(null);
     
     const [searchTerm, setSearchTerm ] = useState("");
+    const [statusFilter, setStatusFilter] = useState("All");
+
     const filteredApplications = applications.filter((application) => {
     const search = searchTerm.toLowerCase();
 
-        return (
-            application.company.toLowerCase().includes(search) ||
-            application.position.toLowerCase().includes(search) ||
-            application.location.toLowerCase().includes(search) ||
-            application.status.toLowerCase().includes(search) ||
-            application.employmentType.toLowerCase().includes(search) ||
-            application.dateApplied.toLowerCase().includes(search) 
-        );
+    const matchesSearch =
+        application.company.toLowerCase().includes(search) ||
+        application.position.toLowerCase().includes(search) ||
+        application.location.toLowerCase().includes(search) ||
+        application.status.toLowerCase().includes(search) ||
+        application.employmentType.toLowerCase().includes(search) ||
+        application.dateApplied.toLowerCase().includes(search);
+
+        const matchesStatus =
+            statusFilter === "All" ||
+            application.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
     });
 
 
@@ -45,7 +52,7 @@ export default function Applications() {
                 </p>
             </div>
 
-            <div className="relative max-w-sm">
+            <div className="flex gap-6 relative max-w-sm">
                 <input
                     type="text"
                     value={searchTerm}
@@ -53,6 +60,19 @@ export default function Applications() {
                     placeholder="Search applications..."
                     className="w-full rounded-lg border px-4 py-2.5 pr-10 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
+
+                <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="rounded-lg border px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+                    <option value="All">All Statuses</option>
+                    <option value="Applied">Applied</option>
+                    <option value="Interview">Interview</option>
+                    <option value="Offer">Offer</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Withdrawn">Withdrawn</option>
+                </select>
             </div>
 
             <div className="hidden md:block">
