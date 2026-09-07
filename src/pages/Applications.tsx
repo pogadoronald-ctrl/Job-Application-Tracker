@@ -23,23 +23,48 @@ export default function Applications() {
     
     const [searchTerm, setSearchTerm ] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
+    const [sortBy, setSortBy] = useState("newest");
 
     const filteredApplications = applications.filter((application) => {
-    const search = searchTerm.toLowerCase();
+        const search = searchTerm.toLowerCase();
 
-    const matchesSearch =
-        application.company.toLowerCase().includes(search) ||
-        application.position.toLowerCase().includes(search) ||
-        application.location.toLowerCase().includes(search) ||
-        application.status.toLowerCase().includes(search) ||
-        application.employmentType.toLowerCase().includes(search) ||
-        application.dateApplied.toLowerCase().includes(search);
+        const matchesSearch =
+            application.company.toLowerCase().includes(search) ||
+            application.position.toLowerCase().includes(search) ||
+            application.location.toLowerCase().includes(search) ||
+            application.status.toLowerCase().includes(search) ||
+            application.employmentType.toLowerCase().includes(search) ||
+            application.dateApplied.toLowerCase().includes(search);
 
         const matchesStatus =
             statusFilter === "All" ||
             application.status === statusFilter;
 
         return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+        switch (sortBy) {
+            case "newest":
+                return (
+                    new Date(b.dateApplied).getTime() -
+                    new Date(a.dateApplied).getTime()
+                );
+
+            case "oldest":
+                return (
+                    new Date(a.dateApplied).getTime() -
+                    new Date(b.dateApplied).getTime()
+                );
+
+            case "company-asc":
+                return a.company.localeCompare(b.company);
+
+            case "company-desc":
+                return b.company.localeCompare(a.company);
+
+            default:
+                return 0;
+        }
     });
 
 
@@ -52,7 +77,7 @@ export default function Applications() {
                 </p>
             </div>
 
-            <div className="flex gap-6 relative max-w-sm">
+            <div className="flex w-full flex-col gap-3 sm:flex-row">
                 <input
                     type="text"
                     value={searchTerm}
@@ -72,6 +97,17 @@ export default function Applications() {
                     <option value="Offer">Offer</option>
                     <option value="Rejected">Rejected</option>
                     <option value="Withdrawn">Withdrawn</option>
+                </select>
+
+                <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="rounded-lg border px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+                    <option value="newest">Newest Applied</option>
+                    <option value="oldest">Oldest Applied</option>
+                    <option value="company-asc">Company A–Z</option>
+                    <option value="company-desc">Company Z–A</option>
                 </select>
             </div>
 
