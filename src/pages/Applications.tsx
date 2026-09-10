@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Application } from "../types/application";
 
 import ApplicationTable from "../components/layout/applications/ApplicationTable";
@@ -9,6 +9,7 @@ import ViewApplicationModal from "../components/layout/applications/ViewApplicat
 import EmptyApplicationState from "../components/layout/applications/EmptyApplicationState";
 import ApplicationLoading from "../components/layout/applications/ApplicationLoading";
 import ApplicationError from "../components/layout/applications/ApplicationError";
+import ApplicationPagination from "../components/layout/applications/ApplicationPagination";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
@@ -73,14 +74,35 @@ export default function Applications() {
         }
     });
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const applicationsPerPage = 10;
+
+    const totalPages = Math.ceil(
+        filteredApplications.length / applicationsPerPage
+    );
+
+    const startIndex = (currentPage - 1) * applicationsPerPage;
+
+    const paginatedApplications = filteredApplications.slice(
+        startIndex,
+        startIndex + applicationsPerPage
+    );
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, statusFilter, sortBy]);
+
+    useEffect(() => {
+        if (currentPage > totalPages && totalPages > 0) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
 
     return (
         <div className="space-y-6">
             <div>
                 <h1 className="text-2xl font-bold">Applications</h1>
-                <p className="text-gray-500">
-                Keep track of all your job applications.
-                </p>
             </div>
 
             <div className="flex w-full flex-col gap-3 sm:flex-row">
@@ -133,7 +155,7 @@ export default function Applications() {
                 <>
                     <div className="hidden md:block">
                         <ApplicationTable
-                            applications={filteredApplications}
+                            applications={paginatedApplications}
                             onEdit={setEditingApplication}
                             onDelete={setDeletingApplication}
                             onView={setViewingApplication}
@@ -141,7 +163,7 @@ export default function Applications() {
                     </div>
 
                     <div className="space-y-4 md:hidden">
-                        {filteredApplications.map((application) => (
+                        {paginatedApplications.map((application) => (
                             <ApplicationCard
                                 key={application.id}
                                 application={application}
@@ -176,6 +198,16 @@ export default function Applications() {
                 <ViewApplicationModal
                     application={viewingApplication}
                     onClose={() => setViewingApplication(null)}
+                />
+            )}
+
+            {totalPages > 1 && (
+                <ApplicationPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalApplications={filteredApplications.length}
+                    applicationsPerPage={applicationsPerPage}
+                    onPageChange={setCurrentPage}
                 />
             )}
         </div>
