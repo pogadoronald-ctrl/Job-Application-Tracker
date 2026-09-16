@@ -24,13 +24,9 @@ export default function ConfirmApplicationModal({
             >
                 <div className="mb-6">
                     <h2 className="text-xl font-bold text-gray-900">
-                        Add Application?
-                    </h2>
-
-                    <p className="mt-2 text-sm text-gray-500">
                         Please confirm the details before adding this
-                        application.
-                    </p>
+                        application
+                    </h2>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 sm:grid-cols-2">
@@ -112,7 +108,7 @@ export default function ConfirmApplicationModal({
                         onClick={onConfirm}
                         className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
                     >
-                        Add Application
+                        Confirm
                     </button>
                 </div>
             </div>
