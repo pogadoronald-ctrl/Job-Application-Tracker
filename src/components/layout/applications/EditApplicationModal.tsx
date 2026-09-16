@@ -4,11 +4,13 @@ import AddApplicationForm from "./AddApplicationForm";
 type EditApplicationModalProps = {
     application: Application;
     onClose: () => void;
+    onSuccess: () => void;
 };
 
 export default function EditApplicationModal({
     application,
     onClose,
+    onSuccess,
 }: EditApplicationModalProps) {
     return (
         <div
@@ -42,7 +44,7 @@ export default function EditApplicationModal({
 
                 <AddApplicationForm
                     application={application}
-                    onSuccess={onClose}
+                    onSuccess={onSuccess}
                 />
             </div>
         </div>

@@ -52,6 +52,7 @@ export default function AddApplicationForm({
         }
 
         setPendingData(data);
+        onSuccess?.();
     };
 
     const [showSuccess, setShowSuccess] = useState(false);

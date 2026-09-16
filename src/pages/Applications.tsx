@@ -10,6 +10,7 @@ import EmptyApplicationState from "../components/layout/applications/EmptyApplic
 import ApplicationLoading from "../components/layout/applications/ApplicationLoading";
 import ApplicationError from "../components/layout/applications/ApplicationError";
 import ApplicationPagination from "../components/layout/applications/ApplicationPagination";
+import Toast, { type ToastVariant } from "../components/ui/toast";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
@@ -99,6 +100,11 @@ export default function Applications() {
         }
     }, [currentPage, totalPages]);
 
+    const [toast, setToast] = useState<{
+        variant: ToastVariant;
+        message: string;
+    } | null>(null);
+
     return (
         <div className="space-y-6">
             <div>
@@ -180,6 +186,13 @@ export default function Applications() {
                 <EditApplicationModal
                     application={editingApplication}
                     onClose={() => setEditingApplication(null)}
+                    onSuccess={() =>{ 
+                        setEditingApplication(null);
+                        setToast({
+                            variant: "success",
+                            message: "Application edited successfully",
+                        });
+                    }}
                 />
             )}
 
@@ -190,6 +203,10 @@ export default function Applications() {
                     onConfirm={() => {
                         remove(deletingApplication.id);
                         setDeletingApplication(null);
+                        setToast({
+                            variant: "deleted",
+                            message: "Application deleted successfully",
+                        });
                     }}
                 />
             )}
@@ -208,6 +225,14 @@ export default function Applications() {
                     totalApplications={filteredApplications.length}
                     applicationsPerPage={applicationsPerPage}
                     onPageChange={setCurrentPage}
+                />
+            )}
+
+            {toast && (
+                <Toast
+                    variant={toast.variant}
+                    message={toast.message}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>
