@@ -10,7 +10,7 @@ import EmptyApplicationState from "../components/layout/applications/EmptyApplic
 import ApplicationLoading from "../components/layout/applications/ApplicationLoading";
 import ApplicationError from "../components/layout/applications/ApplicationError";
 import ApplicationPagination from "../components/layout/applications/ApplicationPagination";
-import Toast, { type ToastVariant } from "../components/ui/toast";
+import Toast, { type ToastVariant } from "../components/ui/Toast";
 
 import { useApplicationsContext } from "../context/ApplicationsContext";
 
