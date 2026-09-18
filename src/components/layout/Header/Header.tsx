@@ -13,6 +13,8 @@ export default function Header(){
                         <NavLink
                             to="/"
                             end
+                            title='Dashboard'
+                            aria-label='Dashboard'
                             className={({ isActive}) =>
                                 `rounded-md px-4 py-2 text-sm font-medium transition ${
                                     isActive
@@ -27,6 +29,8 @@ export default function Header(){
                         <NavLink
                             to="/applications"
                             end
+                            title='Applications'
+                            aria-label='Applications'
                             className={({ isActive}) =>
                                 `rounded-md px-4 py-2 text-sm font-medium transition ${
                                     isActive
@@ -41,6 +45,8 @@ export default function Header(){
                         <NavLink
                             to="/applications/add"
                             end
+                            title='Add Application'
+                            aria-label='Add Application'
                             className={({ isActive}) =>
                                 `rounded-md px-4 py-2 text-sm font-medium transition ${
                                     isActive
