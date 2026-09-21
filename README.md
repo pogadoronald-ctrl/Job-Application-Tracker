@@ -48,9 +48,9 @@ The application provides CRUD functionality, application status tracking, search
   * Mobile-friendly card layout
   * Responsive navigation and forms
 
-![Joblyst Mobile Dashboard](public/screenshots/mobile-dashboard.png)
-![Joblyst Mobile Applications](public/screenshots/mobile-applications.png)
-![Joblyst Mobile Application Form](public/screenshots/mobile-applicationForm.png)
+![Joblyst Mobile Dashboard](public/screenshots/mobile-dashboard.jpg)
+![Joblyst Mobile Applications](public/screenshots/mobile-applications.jpg)
+![Joblyst Mobile Application Form](public/screenshots/mobile-applicationForm.jpg)
 
 * **Form Validation**
 
