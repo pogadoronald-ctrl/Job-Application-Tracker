@@ -173,7 +173,7 @@ export default function AddApplicationForm({
                     <input
                     {...register('dateApplied')}
                     type="date"
-                    className="w-full rounded-lg border px-4 py-2.5"
+                    className="w-full min-w-0 max-w-full rounded-lg border px-4 py-2.5"
                     />
 
                     {errors.dateApplied && (
